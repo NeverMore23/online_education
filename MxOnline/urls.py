@@ -22,5 +22,5 @@ from users import views
 urlpatterns = [
     url('xadmin/', xadmin.site.urls),
     url('', TemplateView.as_view(template_name='index.html'), name='index'),
-    url('login/', views.user_login, name='login'),
+    url('login/', TemplateView.as_view(template_name='login.html'), name='login'),
 ]

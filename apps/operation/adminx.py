@@ -54,12 +54,4 @@ xadmin.site.register(CourseComments, CourseCommentsAdmin)
 xadmin.site.register(UserFavorite, UserFavoriteAdmin)
 
 
-# 创建xadmin的最基本管理器配置，并与view绑定
-class BaseSetting(object):
-    # 开启主题功能
-    enable_themes = True
-    use_bootswatch = True
 
-
-# 将基本配置管理与view绑定
-xadmin.site.register(views.BaseAdminView, BaseSetting)
