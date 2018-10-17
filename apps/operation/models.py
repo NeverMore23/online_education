@@ -4,8 +4,8 @@ from datetime import datetime
 
 from django.db import models
 
-from apps.course.models import Course
-from apps.users.models import UserProfile
+from course.models import Course
+from users.models import UserProfile
 
 
 class UserAsk(models.Model):

@@ -16,9 +16,9 @@ class BaseSetting(object):
 # 全局修改，固定写法
 class GlobalSettings(object):
     # 修改title
-    site_title = 'NBA后台管理界面'
+    site_title = '后台管理界面'
     # 修改footer
-    site_footer = '科比的公司'
+    site_footer = '科比股份有限责任公司'
     # 收起菜单
     menu_style = 'accordion'
 
