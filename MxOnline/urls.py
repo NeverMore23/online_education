@@ -15,12 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.views.generic import TemplateView
-
+from django.contrib.auth import urls
 import xadmin
 from users import views
 
+from django.contrib.auth import  views
+
+
 urlpatterns = [
-    url('xadmin/', xadmin.site.urls),
-    url('', TemplateView.as_view(template_name='index.html'), name='index'),
-    url('login/', TemplateView.as_view(template_name='login.html'), name='login'),
+    # url('xadmin/', xadmin.site.urls),
+    # url('', TemplateView.as_view(template_name='index.html'), name='index'),
+    # url('login/', TemplateView.as_view(template_name='login.html'), name='login'),
+    (r'^accounts/login/$', views.login),
+    (r'^accounts/logout/$', views.logout),
+
 ]
