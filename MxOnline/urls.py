@@ -17,12 +17,12 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 import xadmin
 
-# from users.views import LoginView
-
+from users.views import LoginView, user_login
+from django.contrib.auth import login
 urlpatterns = [
     url('xadmin/', xadmin.site.urls),
-    url('', TemplateView.as_view(template_name='login.html'), name='login'),
-    # url('login/', LoginView.as_view(), name='login'),
+    url('login/', login, name='login'),
+    url('', TemplateView.as_view(template_name="index.html"), name='index'),
     # (r'^accounts/login/$', views.login),
     # (r'^accounts/logout/$', views.logout),
 

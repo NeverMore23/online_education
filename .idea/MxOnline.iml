@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/apps" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/extra_apps" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.5 (py3_md)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

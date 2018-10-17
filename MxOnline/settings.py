@@ -41,9 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users',
-    'apps.course',
-    'apps.organization',
-    'apps.operation',
+    'course',
+    'organization',
+    'operation',
 
     'xadmin',
     'crispy_forms'
@@ -131,7 +131,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
-AUTHENTICATION_BACKENDS = (
-    'users.views.CustomBackend',
-)
+#
+# AUTHENTICATION_BACKENDS = (
+#     'users.views.CustomBackend',
+# )
