@@ -20,4 +20,9 @@ py3_md  py3_env报错(django 版本不同)
 
 6.  总结：重写(添加额外字段)/不重写User类----重写(添加验证字段)/不重写authenticate方法
                 --user--login--写入session--返回页面(根据request中的信息展示页面)
+
     so 必要步骤：验证 + login
+
+    登陆验证的两种方式： 常规/自定义表单
+
+7.  python manage.py changepassword klm123 修改密码

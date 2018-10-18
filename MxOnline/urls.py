@@ -13,18 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.views.generic import TemplateView
 import xadmin
 
-from users.views import LoginView, user_login, login
+from django.contrib.auth import views
+from users.views import LoginView
 
 urlpatterns = [
     url('xadmin/', xadmin.site.urls),
-    url('login/', user_login, name='login'),
-    # url('login/', TemplateView.as_view(template_name="login.html"), name="login"),
+
+    url('login/', LoginView.as_view(), name='login'),
     url('', TemplateView.as_view(template_name="index.html"), name='index'),
-    # (r'^accounts/login/$', views.login),
-    # (r'^accounts/logout/$', views.logout),
+    url('logout/', views.logout_then_login, name='logout'),
 
 ]
+
+'''
+1.  重写了User模型添加了字段,重写了认证后端添加了登陆方式; 自定义登陆：get获取页面,Post验证登陆,返回页面
+2.  登陆url必须在index url之前,否则点击无法跳转(原因不详)
+'''
