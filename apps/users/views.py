@@ -8,6 +8,14 @@ from users.models import UserProfile
 from .forms import LoginForm
 
 
+class RegisterView(View):
+    def get(self, request):
+        return render(request, "register.html", {})
+
+    def post(self, request):
+        pass
+
+
 class CustomBackend(ModelBackend):
 
     def authenticate(self, request, username=None, password=None, **kwargs):

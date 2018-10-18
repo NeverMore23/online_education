@@ -18,14 +18,16 @@ from django.views.generic import TemplateView
 import xadmin
 
 from django.contrib.auth import views
-from users.views import LoginView
+from users.views import LoginView, RegisterView
 
 urlpatterns = [
     url('xadmin/', xadmin.site.urls),
 
+    url('register/', RegisterView.as_view(), name='register'),
     url('login/', LoginView.as_view(), name='login'),
-    url('', TemplateView.as_view(template_name="index.html"), name='index'),
     url('logout/', views.logout_then_login, name='logout'),
+    url('', TemplateView.as_view(template_name="index.html"), name='index'),
+
 
 ]
 
