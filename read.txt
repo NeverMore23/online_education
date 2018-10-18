@@ -4,4 +4,20 @@ py3_md  py3_env报错(django 版本不同)
 
 用户登陆：
 
+1.  使用Django自带的模板视图 TemplateView.as_view(template_name="login.html") 直接返回静态页面(例如静态首页)
+2.  一个html页面,可以通过django自带模板视图类TemplateView 直接返回(静态),也可以使用自定义视图类返回给前端(交互)
+3.  表单提交：将一个表单提交到一个Url, input自动以字典形式提交(登陆：get提交到该url--获取页面,用户名密码提交到该url--验证登陆)
+4.  身份认证--authenticate--返回user--传入user--登陆login
 
+    默认：使用django自带的user和认证后端
+    如果重写了user,添加了字段,则需要配置身份认证模型类
+    如果重写了认证后端,添加了认证字段例如电话/邮箱，则需要配置身份认证后端
+
+    身份认证模型类配置  AUTH_USER_MODEL
+    身份认证后端配置    AUTHENTICATION_BACKENDS
+
+5.  身份认证后的登陆都是使用django自带的django.contrib.auth.login,传入一个user,该登陆函数本质是将uer用户信息写入session
+
+6.  总结：重写(添加额外字段)/不重写User类----重写(添加验证字段)/不重写authenticate方法
+                --user--login--写入session--返回页面(根据request中的信息展示页面)
+    so 必要步骤：验证 + login

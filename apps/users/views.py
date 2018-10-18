@@ -7,19 +7,19 @@ from django.views.generic.base import View
 from users.models import UserProfile
 
 
-# class CustomBackend(ModelBackend):
-#
-#     def authenticate(self, request, username=None, password=None, **kwargs):
-#
-#         try:
-#             user = UserProfile.objects.get(Q(username=username) | Q(email=username) | Q(mobile=username))
-#         except UserProfile.DoesNotExist:
-#             return None
-#         else:
-#             if user.check_password(password):
-#                 return user
-#             else:
-#                 return None
+class CustomBackend(ModelBackend):
+
+    def authenticate(self, request, username=None, password=None, **kwargs):
+
+        try:
+            user = UserProfile.objects.get(Q(username=username) | Q(email=username) | Q(mobile=username))
+        except UserProfile.DoesNotExist:
+            return None
+        else:
+            if user.check_password(password):
+                return user
+            else:
+                return None
 
 
 class LoginView(View):
@@ -39,9 +39,6 @@ class LoginView(View):
             return render(request, 'index.html')
         else:
             return render(request, 'login.html', {'msg': '用户名或密码错误'})
-
-
-from django.contrib.auth import authenticate, login
 
 
 # 当我们配置的url被这个view处理时，将会自动传入request对象.
