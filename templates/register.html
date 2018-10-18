@@ -133,7 +133,7 @@
                     <!--</form>-->
                 <!--</div>-->
                 <div class="tab-form">
-                    <form id="email_register_form" autocomplete="off">
+                    <form id="email_register_form" autocomplete="off" action="{% url 'register'%}">
                         <input type='hidden' name='csrfmiddlewaretoken' value='gTZljXgnpvxn0fKZ1XkWrM1PrCGSjiCZ' />
                         <div class="form-group marb20">
                             <label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
@@ -143,14 +143,15 @@
                             <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
                             <input type="password" id="id_password" name="password" placeholder="请输入6-20位非中文字符密码" />
                         </div>
-                        <div class="form-group marb8 captcha1">
-                            <label>验&nbsp;证&nbsp;码</label>
-                            <input autocomplete="off" class="form-control-captcha email-register-captcha" id="email-register-captcha_1" name="captcha_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha email-register-captcha" id="email-register-captcha_0" name="captcha_0" placeholder="请输入验证码" type="hidden" value="00bf8887548d891c1cd23b1abd871c1b8076f0ff" /> &nbsp;<img src="/captcha/image/00bf8887548d891c1cd23b1abd871c1b8076f0ff/" alt="captcha" class="captcha" />
+                        <div class="form-group marb8 captcha1 ">
+                          <label>验&nbsp;证&nbsp;码</label>
+                            {{ register_form.captcha }}
                         </div>
                         <div class="error btns" id="jsEmailTips"></div>
                         <div class="auto-box marb8">
                         </div>
                         <input class="btn btn-green" id="jsEmailRegBtn" type="button" value="注册并登录" />
+                        {% csrf_token %}
                     </form>
                 </div>
                 <p class="form-p">已有账号？<a href="/login/">[立即登录]</a></p>

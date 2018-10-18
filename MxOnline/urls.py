@@ -28,6 +28,8 @@ urlpatterns = [
     url('logout/', views.logout_then_login, name='logout'),
     url('', TemplateView.as_view(template_name="index.html"), name='index'),
 
+    url("captcha/", include('captcha.urls'))
+
 
 ]
 

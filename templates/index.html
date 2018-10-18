@@ -21,7 +21,7 @@
             {% if request.user.is_authenticated %}
             <div class="top"><!--如果用户登录成功，显示个人中心-->
                 <div class="wp">
-                    <div class="fl"><p>服务电话：<b>33333333</b></p></div>
+                    <div class="fl"><p>服务电话：<b>{{ request.user.mobile}}</b></p></div>
                     <!--登录后跳转-->
 
                     <div class="personal">
@@ -34,8 +34,11 @@
                                 <dt><img width="80" height="80" src="/static/media/image/2016/12/default_big_14.png"/>
                                 </dt>
                                 <dd>
-                                    <h2>管理员</h2>
-                                    <p>admin@admin.com</p>
+                                    <h2>{% if request.user.is_staff %}管理员
+                                        {% else%}员工
+                                        {% endif %}
+                                    </h2>
+                                    <p>{{ request.user.email}}</p>
                                 </dd>
                             </dl>
                             <div class="btn">
