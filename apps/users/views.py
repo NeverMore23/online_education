@@ -8,6 +8,7 @@ from django.views.generic.base import View
 from users.models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm
 from users.utils.email_send import send_register_eamil
+from captcha.fields import CaptchaField
 
 
 # 激活用户
@@ -33,27 +34,30 @@ class ActiveUserView(View):
 
 class RegisterView(View):
     def get(self, request):
+        # UserProfile.objects.all().delete()
         register_form = RegisterForm()
         return render(request, "register.html", {"register_form": register_form})
 
     def post(self, request):
         register_form = RegisterForm(request.POST)
+
         if register_form.is_valid():
             user_name = request.POST.get('email', None)
             # 如果用户已存在，则提示错误信息
-            if UserProfile.objects.filter(email=user_name):
+            if UserProfile.objects.filter(Q(email=user_name) | Q(username=user_name)):
                 return render(request, 'register.html', {'register_form': register_form, 'msg': '用户已存在'})
 
             pass_word = request.POST.get('password', None)
-            # 实例化一个user_profile对象
+
             user_profile = UserProfile()
             user_profile.username = user_name
             user_profile.email = user_name
             user_profile.is_active = False
-            # 对保存到数据库的密码加密
-            user_profile.password = make_password(pass_word)
+            user_profile.password = make_password(pass_word)  # 对保存到数据库的密码加密
             user_profile.save()
+
             send_register_eamil(user_name, 'register')
+
             return render(request, 'login.html')
         else:
             return render(request, 'register.html', {'register_form': register_form})

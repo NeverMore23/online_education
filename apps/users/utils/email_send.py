@@ -37,7 +37,7 @@ def send_register_eamil(email, send_type="register"):
     email_body = ""
 
     if send_type == "register":
-        email_title = "NBA注册激活链接"
+        email_title = "看了吗注册激活链接"
         email_body = "请点击下面的链接激活你的账号: http://127.0.0.1:8000/active/{0}".format(code)
 
         # 使用Django内置函数完成邮件发送。四个参数：主题，邮件内容，从哪里发，接收者list
