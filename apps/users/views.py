@@ -5,9 +5,30 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.views.generic.base import View
 
-from users.models import UserProfile
+from users.models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm
-from utils.email_send import send_register_eamil
+from users.utils.email_send import send_register_eamil
+
+
+# 激活用户
+class ActiveUserView(View):
+    def get(self, request, active_code):
+        # 查询邮箱验证记录是否存在
+        all_record = EmailVerifyRecord.objects.filter(code=active_code)
+
+        if all_record:
+            for record in all_record:
+                # 获取到对应的邮箱
+                email = record.email
+                # 查找到邮箱对应的user
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+        # 验证码不对的时候跳转到激活失败页面
+        else:
+            return render(request, 'active_fail.html')
+        # 激活成功跳转到登录页面
+        return render(request, "login.html", )
 
 
 class RegisterView(View):
@@ -16,7 +37,7 @@ class RegisterView(View):
         return render(request, "register.html", {"register_form": register_form})
 
     def post(self, request):
-        register_form = RegisterForm()
+        register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             user_name = request.POST.get('email', None)
             # 如果用户已存在，则提示错误信息
@@ -69,8 +90,8 @@ class LoginView(View):
             user = authenticate(username=user_name, password=pass_word)
 
             if user is not None:
-                if user.is_active:
-                    # 只有注册激活才能登录
+                if user.is_active:  # 只有注册激活才能登录
+
                     login(request, user)
                     return render(request, 'index.html')
                 else:

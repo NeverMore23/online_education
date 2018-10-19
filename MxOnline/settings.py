@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +137,12 @@ STATICFILES_DIRS = (
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+# 发送邮箱验证的配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '462337615@qq.com'
+EMAIL_HOST_PASSWORD = "pkqybhdqbucwbgje"
+EMAIL_USE_TLS = False
+EMAIL_FROM = '462337615@qq.com'
