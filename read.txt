@@ -36,3 +36,22 @@ py3_md  py3_env报错(django 版本不同)
 11. --1.django基于cookie和基于session的状态保持是怎样的
     --2.基于session的状态保持，如果截取到用户的session_id，是否可以伪造登陆
     --3.django的session默认保存在什么地方，如何设置保存在redis或mysql中
+
+12. 使用django自带的验证机制登陆--Authentication,底层状态保持还是使用session
+    不使用django自带的验证机制登陆--状态保持使用手动session
+
+13. 使用表单验证提交数据，is_valid 验证成功后，可以使用form.cleaned_data["username"]获取表单中数据
+    也可以在request中获取数据 request.POST.get("username")
+
+14. {{ request }}这个变量会被默认传入模板中，可以通过圆点的调用方式，获取它内部的{{ request.session }}，
+    再进一步的获取session中的内容。其实{{ request }}中的数据远不止此，例如{{ request.path }}就可以获取先前的url地址。
+
+15. 注册登陆:
+        1.可以直接使用或重写再使用 django自带的验证登陆机制：
+            重写user---重写authentication
+            注册： (View)表单校验--是否注册过--实例化user---make_password()---send_email---active
+                  L1:(View)表单校验---authenticate校验---是否active---login(user)
+                  L2:(LoginView)表单校验---查询用户模型类---返回页面
+        2. 不使用系统自带，完全新定义User模型类
+           常规校验 手动session hashlib手动加密
+           https://www.cnblogs.com/derek1184405959/p/8567522.html

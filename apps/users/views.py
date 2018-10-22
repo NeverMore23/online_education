@@ -161,7 +161,7 @@ class UserLoginView(View):
             return render(request, 'login.html', {'login_form': login_form})
 
 
-# 登陆方式2
+# 登陆方式2--功能上和1相同
 class AdminLoginView(LoginView):
     # template_name = 'login.html'
     # extra_context = {"debug": settings.DEBUG}
