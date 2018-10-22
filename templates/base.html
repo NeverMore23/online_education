@@ -5,32 +5,61 @@
 	<meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title>{% block title%} 慕海学习网-首页{% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/animate.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<title>{% block title%} 看了吗在线-首页{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     {% block custom_css %}{% endblock %}
     <script src="/static/js/jquery.min.js" type="text/javascript"></script>
     <script src="/static/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
     {% block custom_js %}{% endblock %}
 </head>
 <body>
+
 <section class="headerwrap ">
     <header>
 		<div  class=" header">
- 			<div class="top">
-				<div class="wp">
-					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
-					<!--登录后跳转-->
+ 			{% if request.user.is_authenticated %}
+            <div class="top"><!--如果用户登录成功，显示个人中心-->
+                <div class="wp">
+                    <div class="fl"><p>服务电话：<b>{{ request.user.mobile}}</b></p></div>
+                    <!--登录后跳转-->
 
-                        
-                        <a style="color:white" class="fr registerbtn" href="{% url 'register'%}">注册</a>
-                        <a style="color:white" class="fr loginbtn" href="{% url 'login'%}">登录</a>
-                    
+                    <div class="personal">
+                        <dl class="user fr">
+                            <dd>admin@admin.com<img class="down fr" src="/static/images/top_down.png"/></dd>
+                            <dt><img width="20" height="20" src="/static/media/image/2016/12/default_big_14.png"/></dt>
+                        </dl>
+                        <div class="userdetail">
+                            <dl>
+                                <dt><img width="80" height="80" src="/static/media/image/2016/12/default_big_14.png"/>
+                                </dt>
+                                <dd>
+                                    <h2>{% if request.user.is_staff %}管理员
+                                        {% else%}员工
+                                        {% endif %}
+                                    </h2>
+                                    <p>{{ request.user.email}}</p>
+                                </dd>
+                            </dl>
+                            <div class="btn">
+                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
+                                <a class="fr" href="/logout/">退出</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}           <!--如果用户登录失败，显示用户登录按钮-->
+            <div class="top">
+                <div class="wp">
+                    <div class="fl"><p>服务电话：<b>33333333</b></p></div>
+                    <a style="color:white" class="fr registerbtn" href="/register/">注册</a>
+                    <a style="color:white" class="fr loginbtn" href="/login/">登录</a>
 
-
-				</div>
-			</div>
+                </div>
+            </div>
+            {% endif %}
 
             <div class="middle">
                 <div class="wp">
@@ -64,9 +93,9 @@
 								</a>
 							</li>
 							<li >
-								<a href="teachers-list.html"}">授课教师</a>
+								<a href="teachers-list.html">授课教师</a>
 							</li>
-							<li class="active" ><a href="{% url 'org_list'%}">授课机构</a></li>
+							<li><a href="{% url 'org_list'%}">授课机构</a></li>
 						</ul>
 					</div>
 				</div>
@@ -75,29 +104,85 @@
 			</div>
     </header>
 </section>
-<!--crumbs start-->
+
+<div class="banner">
+    <div class="wp">
+        <div class="fl">
+            <div class="imgslide">
+                <ul class="imgs">
+
+                    <li>
+                        <a href="http://www.imooc.com">
+                            <img width="1200" height="478"
+                                 src="/static/media/banner/2016/11/57a801860001c34b12000460.jpg"/>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="http://www.projectsedu.com">
+                            <img width="1200" height="478"
+                                 src="/static/media/banner/2016/11/57aa86a0000145c512000460.jpg"/>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="http://www.projectsedu.com">
+                            <img width="1200" height="478"
+                                 src="/static/media/banner/2016/11/57a801860001c34b12000460_z4Vb8zl.jpg"/>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="http://www.projectsedu.com">
+                            <img width="1200" height="478"
+                                 src="/static/media/banner/2016/11/57aa86a0000145c512000460_nMwvoQD.jpg"/>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="http://www.projectsedu.com">
+                            <img width="1200" height="478"
+                                 src="/static/media/banner/2016/11/57aa86a0000145c512000460_GXIBATC.jpg"/>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="unslider-arrow prev"></div>
+            <div class="unslider-arrow next"></div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
 {% block custom_bread %}
 {% endblock %}
 
 {% block conetent %}
 {% endblock%}
-<footer>
-		<div class="footer">
-			<div class="wp">
-				<ul class="cont">
-					<li class="logo"><a href=""><img src="/static/images/footlogo.png"/></a></li>
-					<li class="code"><img src="/static/images/code.jpg"/><p class="center">扫描关注微信</p></li>
-					<li class="third"><img class="fl" src="/static/images/tell.png"/><p class="tell">33333333</p><p class="time">周一至周日 9:00-18:00</p></li>
-				</ul>
 
-			</div>
-			<p class="line"></p>
-			<div class="wp clear">
-                <span class="fl">? 2016 www.projectsedu.com KLM在线-在线学习交流平台 保留所有权利</span>
-                <span class="fr">copyright ? 2016 ICP备案证书号：蜀ICP备xxxxx号-1</span>
-			</div>
-		</div>
-	</footer>
+
+<footer>
+    <div class="footer">
+        <div class="wp">
+            <ul class="cont">
+                <li class="logo"><a href=""><img src="/static/images/footlogo.png"/></a></li>
+                <li class="code"><img src="/static/images/code.jpg"/><p class="center">扫描关注微信</p></li>
+                <li class="third"><img class="fl" src="/static/images/tell.png"/><p class="tell">33333333</p><p class="time">周一至周日 9:00-18:00</p></li>
+            </ul>
+
+        </div>
+        <p class="line"></p>
+        <div class="wp clear">
+            <span class="fl">? 2016 www.projectsedu.com KLM在线-在线学习交流平台 保留所有权利</span>
+            <span class="fr">copyright ? 2016 ICP备案证书号：蜀ICP备xxxxx号-1</span>
+        </div>
+    </div>
+</footer>
 
 <section>
     <ul class="sidebar">
@@ -109,7 +194,7 @@
 </section>
 <script src="{% static 'js/selectUi.js'%}" type='text/javascript'></script>
 <script src="{% static 'js/deco-common.js'%}" type='text/javascript'></script>
-<script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js'%}"></script>
+<script src="{% static 'js/plugins/laydate/laydate.js'%}" type="text/javascript" ></script>
 <script src="{% static 'js/plugins/layer/layer.js'%}"></script>
 <script src="{% static 'js/plugins/queryCity/js/public.js'%}" type="text/javascript"></script>
 <script src="{% static 'js/unslider.js'%}" type="text/javascript"></script>
