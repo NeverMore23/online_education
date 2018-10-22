@@ -22,6 +22,9 @@ from django.contrib.auth import views
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
 from organization.views import OrgView
 
+from django.views.static import serve
+from .settings import MEDIA_ROOT
+
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
 
@@ -39,6 +42,8 @@ urlpatterns = [
     re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name='reset_pwd'),
     path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
 
+    # 配置文件上传的访问处理url
+    re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 ]
 
 '''
