@@ -11,6 +11,7 @@ from users.utils.email_send import send_register_eamil
 from captcha.fields import CaptchaField
 
 
+#  提交重置密码
 class ModifyPwdView(View):
     def post(self, request):
         modify_form = ModifyPwdForm(request.POST)
@@ -30,6 +31,7 @@ class ModifyPwdView(View):
             return render(request, "password_reset.html", {"email": email, "modify_form": modify_form})
 
 
+# 忘记密码后重置密码,邮件中弹出页面
 class ResetView(View):
     def get(self, request, active_code):
         all_records = EmailVerifyRecord.objects.filter(code=active_code)
@@ -42,6 +44,7 @@ class ResetView(View):
         return render(request, "login.html")
 
 
+# 登陆时忘记密码
 class ForgetPwdView(View):
     def get(self, request):
         forget_form = ForgetPwdForm()
@@ -58,7 +61,7 @@ class ForgetPwdView(View):
             return render(request, 'forgetpwd.html', {'forget_form': forget_form})
 
 
-# 激活用户
+# 注册后激活用户
 class ActiveUserView(View):
     def get(self, request, active_code):
         # 查询邮箱验证记录是否存在

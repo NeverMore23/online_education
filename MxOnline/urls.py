@@ -20,9 +20,13 @@ import xadmin
 
 from django.contrib.auth import views
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
+from organization.views import OrgView
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
+
+
+    path("org_list/", OrgView.as_view(), name="org_list"),
 
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),

@@ -47,7 +47,7 @@ def send_register_eamil(email, send_type="register"):
             pass
 
     if send_type == "forget":
-        email_title = "NBA找回密码链接"
+        email_title = "看了吗找回密码链接"
         email_body = "请点击下面的链接找回你的密码: http://127.0.0.1:8000/reset/{0}".format(code)
 
         # 使用Django内置函数完成邮件发送。四个参数：主题，邮件内容，从哪里发，接受者list
