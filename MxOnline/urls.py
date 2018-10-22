@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 import xadmin
 
 from django.contrib.auth import views
-from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
+from users.views import UserLoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, AdminLoginView
 from organization.views import OrgView
 
 from django.views.static import serve
@@ -32,7 +32,8 @@ urlpatterns = [
     path("org_list/", OrgView.as_view(), name="org_list"),
 
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', LoginView.as_view(), name='login'),
+    path('login/', UserLoginView.as_view(), name='login'),  # 登陆方式1
+    # path('login/', AdminLoginView.as_view(), name='login'),  # 登陆方式2
     path('logout/', views.logout_then_login, name='logout'),
     path('', TemplateView.as_view(template_name="index.html"), name='index'),
 

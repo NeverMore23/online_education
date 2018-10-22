@@ -32,3 +32,7 @@ py3_md  py3_env报错(django 版本不同)
 9.  201810191758 完成登陆注册/找回密码/重置密码/修改密码  没有使用captcha
 
 10. logout需要在settings中指定Login_url,看源码即可知
+
+11. --1.django基于cookie和基于session的状态保持是怎样的
+    --2.基于session的状态保持，如果截取到用户的session_id，是否可以伪造登陆
+    --3.django的session默认保存在什么地方，如何设置保存在redis或mysql中

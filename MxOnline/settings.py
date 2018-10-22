@@ -64,6 +64,7 @@ ROOT_URLCONF = 'MxOnline.urls'
 
 
 LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'    # 登陆方式2使用
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -148,3 +149,5 @@ EMAIL_HOST_USER = '462337615@qq.com'
 EMAIL_HOST_PASSWORD = "pkqybhdqbucwbgje"
 EMAIL_USE_TLS = False
 EMAIL_FROM = '462337615@qq.com'
+
+

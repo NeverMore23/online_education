@@ -1,9 +1,11 @@
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.views.generic.base import View
+from django.conf import settings
 
 from users.models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm, ForgetPwdForm, ModifyPwdForm
@@ -128,9 +130,8 @@ class CustomBackend(ModelBackend):
                 return None
 
 
-class LoginView(View):
-    '''用户登录'''
-
+# 登陆方式1
+class UserLoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
@@ -138,8 +139,8 @@ class LoginView(View):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
 
-            user_name = request.POST.get('username', None)
-            pass_word = request.POST.get('password', None)
+            user_name = login_form.cleaned_data["username"]  # 从表单中获取数据
+            pass_word = request.POST.get('password', None)  # 从请求中获取数据  两种都是可以的
 
             user = authenticate(username=user_name, password=pass_word)
 
@@ -149,11 +150,38 @@ class LoginView(View):
                     login(request, user)
                     return render(request, 'index.html')
                 else:
-                    return render(request, 'login.html', {'msg': '用户名或密码错误', 'login_form': login_form})
+                    login_form.add_error(field=None, error=u"用户名或密码错误")
+                    return render(request, 'login.html', {'login_form': login_form})
             # 只有当用户名或密码不存在时，才返回错误信息到前端
             else:
                 return render(request, 'login.html', {'msg': '用户名或密码错误', 'login_form': login_form})
 
-        # form.is_valid（）已经判断不合法了，所以这里不需要再返回错误信息到前端了
+        # 已经判断不合法了，不需要再返回错误信息到前端了
         else:
             return render(request, 'login.html', {'login_form': login_form})
+
+
+# 登陆方式2
+class AdminLoginView(LoginView):
+    # template_name = 'login.html'
+    # extra_context = {"debug": settings.DEBUG}
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = self.get_form()
+
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+
+            try:
+                user = UserProfile.objects.get(username=username)
+            except:
+                form.add_error(field=None, error=u"用户名或密码错误")
+                return self.form_invalid(form)
+
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
