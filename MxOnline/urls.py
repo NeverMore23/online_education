@@ -28,26 +28,24 @@ from .settings import MEDIA_ROOT
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
 
-
-    path("org_list/", OrgView.as_view(), name="org_list"),
-
-    path('register/', RegisterView.as_view(), name='register'),
-    path('login/', UserLoginView.as_view(), name='login'),  # 登陆方式1
-    # path('login/', AdminLoginView.as_view(), name='login'),  # 登陆方式2
-    path('logout/', views.logout_then_login, name='logout'),
     path('', TemplateView.as_view(template_name="index.html"), name='index'),
 
-    path('captcha/', include('captcha.urls')),
+    path('register/', RegisterView.as_view(), name='register'),
     re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name='user_active'),
+
+    path('login/', UserLoginView.as_view(), name='login'),  # 登陆方式1
+    # path('login/', AdminLoginView.as_view(), name='login'),  # 登陆方式2
     re_path('forget/', ForgetPwdView.as_view(), name='forget_pwd'),
     re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name='reset_pwd'),
     path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
+    path('logout/', views.logout_then_login, name='logout'),
 
     # 配置文件上传的访问处理url
     re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
+    path('captcha/', include('captcha.urls')),
+
+    path("org_list/", OrgView.as_view(), name="org_list"),
+
 ]
 
-'''
-1.  重写了User模型添加了字段,重写了认证后端添加了登陆方式; 自定义登陆：get获取页面,Post验证登陆,返回页面
-2.  登陆url必须在index url之前,否则点击无法跳转(原因不详)
-'''
+

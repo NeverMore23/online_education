@@ -150,7 +150,7 @@ class UserLoginView(View):
                     login(request, user)
                     return render(request, 'index.html')
                 else:
-                    login_form.add_error(field=None, error=u"用户名或密码错误")
+                    login_form.add_error(field=None, error=u"登陆失败")
                     return render(request, 'login.html', {'login_form': login_form})
             # 只有当用户名或密码不存在时，才返回错误信息到前端
             else:
